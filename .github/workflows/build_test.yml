@@ -26,3 +26,17 @@ jobs:
       run: npm test
     #- name: Run Security Tests
       #run: npm audit
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: build-test
+    steps:
+      - name: Deploy to production
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.MY_RENDER_SERVICE_ID }} 
+          api-key: ${{ secrets.MY_RENDER_SERVICE_API_KEY }}  
+          wait-for-success: true
+          #srv-d14mkluuk2gs73b1v8k0
+          #rnd_Llhbm4b5F9l8clxzkx04j3GL8TBf
